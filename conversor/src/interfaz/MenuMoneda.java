@@ -13,11 +13,16 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
+
+import conversor.Moneda;
+
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class MenuMoneda extends JFrame {
-	private String[] optionsMoneda  = {"Peso Colombiano", "Dolar", "Euros", "Libras Esterlinas", "Yen Japonés", "Won sul-coreano"};
+	private String[] optionsMoneda  = {"Peso Colombiano - COP", "Dolar - USD", "Euros - EUR", "Libras Esterlinas - GBP", "Yen Japonés - JPY", "Won sul-coreano - KRW"};
 	private JPanel contentPane;
 	private JTextField Valor;
 
@@ -72,6 +77,19 @@ public class MenuMoneda extends JFrame {
 		contentPane.add(Moneda1);
 		
 		Valor = new JTextField();
+		Valor.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				 char caracter = e.getKeyChar();
+			      if(((caracter < '0') ||
+			         (caracter > '9')) &&
+			         (caracter != '\b') &&
+			         (caracter != '.'))
+			      {
+			         e.consume();  // ignorar el evento de teclado
+			      }
+			}
+		});
 		Valor.setBounds(142, 71, 86, 20);
 		contentPane.add(Valor);
 		Valor.setColumns(10);
@@ -93,6 +111,9 @@ public class MenuMoneda extends JFrame {
 					MonedaRespuesta.setText("Debe colocar el valor a convertir");
 					MonedaRespuesta.setForeground(Color.red);
 				} else {
+					Moneda moneda = new Moneda("USD", Double.parseDouble(Valor.getText()));
+					System.out.println(moneda.getCantidad());
+					moneda.sacarDivisa("EUR");
 					MonedaRespuesta.setText(Valor.getText());
 					MonedaRespuesta.setForeground(Color.black);
 				}
