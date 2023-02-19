@@ -7,8 +7,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.Properties;
 import java.util.Scanner;
+
+import javax.swing.text.html.HTMLEditorKit.Parser;
 
 import org.json.JSONObject;
 
@@ -22,44 +25,42 @@ public class Moneda {
 		this.cantidad = cantidad;
 	}
 
-	public void sacarDivisa(String moneda2) {
+	public double sacarDivisa(String moneda2) {
+		double response = 0;
 		try {
 			Properties propiedades = new Properties();
 			InputStream entrada = new FileInputStream("datos.properties");
 			propiedades.load(entrada);
-			System.out.println(propiedades.getProperty("API_KEY"));
-			URL url = new URL("https://api.apilayer.com/fixer/convert?to=" + nombre + "&from=" + moneda2 + "&amount=1");
+			URL url = new URL("https://api.apilayer.com/fixer/convert?to=" + moneda2 + "&from=" + nombre + "&amount=1");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("apikey", propiedades.getProperty("API_KEY"));
 			conn.connect();
 			int codeResponse = conn.getResponseCode();
-			System.out.println(codeResponse);
 			if (codeResponse != 200) {
 				throw new RuntimeException("Ocurrio un error " + codeResponse);
 			} else {
-				System.out.println("Entre aqui");
 				BufferedReader br = null;
 				System.out.println(conn.getInputStream());
 				br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 				String myJson = "";
 				String currentValue = "";
 				while ((currentValue = br.readLine()) != null) {
-					System.out.println(currentValue);
 					myJson += currentValue;
 				}
 				br.close();
 				JSONObject obj = new JSONObject(myJson);
-				Double response = obj.getJSONObject("info").getDouble("rate");
-
-				System.out.println(response);
-
+				response = obj.getJSONObject("info").getDouble("rate");
 			}
-			System.out.println(codeResponse);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		return response;
+	}
+	
+	public double convert(double divisa) {
+		return (cantidad * divisa);
 	}
 
 	public String getNombre() {
