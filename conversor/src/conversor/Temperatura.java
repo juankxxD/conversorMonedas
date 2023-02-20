@@ -15,17 +15,17 @@ import javax.swing.text.html.HTMLEditorKit.Parser;
 
 import org.json.JSONObject;
 
-public class Moneda {
+public class Temperatura {
 
 	private String nombre;
 	private double cantidad;
 
-	public Moneda(String nombre, double cantidad) {
+	public Temperatura(String nombre, double cantidad) {
 		this.nombre = nombre;
 		this.cantidad = cantidad;
 	}
 
-	public Moneda(String nombre) {
+	public Temperatura(String nombre) {
 		this.nombre = nombre;
 	}
 

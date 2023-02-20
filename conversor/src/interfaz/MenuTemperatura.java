@@ -15,7 +15,9 @@ import java.awt.event.ActionEvent;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 import conversor.ConversorMoneda;
+import conversor.ConversorTemperatura;
 import conversor.Moneda;
+import conversor.Temperatura;
 
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -23,9 +25,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 
-public class MenuMoneda extends JFrame {
-	private String[] optionsMoneda = { "Peso Colombiano - COP", "Dolar - USD", "Euros - EUR", "Libras Esterlinas - GBP",
-			"Yen Japonés - JPY", "Won sul-coreano - KRW" };
+public class MenuTemperatura extends JFrame {
+	private String[] optionsTemperatura = { "Fahrenheit - F", "Celsius - C", "Kelvin - K"};
 	private JPanel contentPane;
 	private JTextField Valor;
 
@@ -36,7 +37,7 @@ public class MenuMoneda extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenuMoneda frame = new MenuMoneda();
+					MenuTemperatura frame = new MenuTemperatura();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,7 +49,7 @@ public class MenuMoneda extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MenuMoneda() {
+	public MenuTemperatura() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 536, 228);
 		contentPane = new JPanel();
@@ -57,24 +58,24 @@ public class MenuMoneda extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Cuantos");
+		JLabel lblNewLabel = new JLabel("Grados");
 		lblNewLabel.setFont(new Font("Ebrima", Font.PLAIN, 12));
 		lblNewLabel.setBounds(155, 49, 72, 20);
 		contentPane.add(lblNewLabel);
 
-		JComboBox Moneda2 = new JComboBox();
-		Moneda2.setBounds(332, 70, 122, 22);
-		contentPane.add(Moneda2);
-		Moneda2.addItem("--");
+		JComboBox Temperatura2 = new JComboBox();
+		Temperatura2.setBounds(332, 70, 122, 22);
+		contentPane.add(Temperatura2);
+		Temperatura2.addItem("--");
 
-		JComboBox Moneda1 = new JComboBox();
-		for (int i = 0; i < optionsMoneda.length; i++) {
-			Moneda1.addItem(optionsMoneda[i]);
-			Moneda2.addItem(optionsMoneda[i]);
+		JComboBox Temperatura1 = new JComboBox();
+		for (int i = 0; i < optionsTemperatura.length; i++) {
+			Temperatura1.addItem(optionsTemperatura[i]);
+			Temperatura2.addItem(optionsTemperatura[i]);
 		}
 
-		Moneda1.setBounds(10, 70, 122, 22);
-		contentPane.add(Moneda1);
+		Temperatura1.setBounds(10, 70, 122, 22);
+		contentPane.add(Temperatura1);
 
 		Valor = new JTextField();
 		Valor.addKeyListener(new KeyAdapter() {
@@ -95,30 +96,29 @@ public class MenuMoneda extends JFrame {
 		lblNewLabel_1.setBounds(245, 74, 66, 14);
 		contentPane.add(lblNewLabel_1);
 
-		JLabel MonedaRespuesta = new JLabel("");
-		MonedaRespuesta.setBounds(126, 135, 270, 23);
-		contentPane.add(MonedaRespuesta);
+		JLabel TemperaturaRespuesta = new JLabel("");
+		TemperaturaRespuesta.setBounds(126, 135, 270, 23);
+		contentPane.add(TemperaturaRespuesta);
 
 		JButton btnConvert = new JButton("Convertir");
 		btnConvert.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (Valor.getText().length() == 0) {
-					MonedaRespuesta.setText("Debe colocar el valor a convertir");
-					MonedaRespuesta.setForeground(Color.red);
+					TemperaturaRespuesta.setText("Debe colocar el valor a convertir");
+					TemperaturaRespuesta.setForeground(Color.red);
 				} else {
 					try {
-						String tipoMoneda1 = Moneda1.getSelectedItem().toString().split("-")[1].trim();
-						String tipoMoneda2 = Moneda2.getSelectedItem().toString().split("-")[1].trim();
-						Moneda monedaDe = new Moneda(tipoMoneda1, Double.parseDouble(Valor.getText()));
-						Moneda monedaHasta = new Moneda(tipoMoneda2);
-						ConversorMoneda conversor = new ConversorMoneda(monedaDe, monedaHasta);
-						double divisa = conversor.sacarDivisa();
+						String tipoTemperatura1 = Temperatura1.getSelectedItem().toString().split("-")[1].trim();
+						String tipoTemperatura2 = Temperatura2.getSelectedItem().toString().split("-")[1].trim();
+						Temperatura temperaturaDe = new Temperatura(tipoTemperatura1, Double.parseDouble(Valor.getText()));
+						Temperatura temperaturaHasta = new Temperatura(tipoTemperatura2);
+						ConversorTemperatura conversor = new ConversorTemperatura(temperaturaDe, temperaturaHasta);
 						DecimalFormat formato2 = new DecimalFormat("#.##");
-						MonedaRespuesta.setText("La equivalencia de " + tipoMoneda1 +" a " + tipoMoneda2 + " es: " +formato2.format(conversor.convert(divisa)));
-						MonedaRespuesta.setForeground(Color.black);
+						TemperaturaRespuesta.setText("La equivalencia de " + tipoTemperatura1 +" a " + tipoTemperatura2 + " es: " +formato2.format(conversor.convert()));
+						TemperaturaRespuesta.setForeground(Color.black);
 					} catch (Exception ex) {
-						MonedaRespuesta.setText("Ha ocurrido un error, contacte al desarrollador!!");
-						MonedaRespuesta.setForeground(Color.red);
+						TemperaturaRespuesta.setText("Ha ocurrido un error, contacte al desarrollador!!");
+						TemperaturaRespuesta.setForeground(Color.red);
 						ex.printStackTrace();
 					}
 				}
@@ -147,17 +147,17 @@ public class MenuMoneda extends JFrame {
 		btnVolver.setBounds(410, 135, 89, 23);
 		contentPane.add(btnVolver);
 
-		Moneda2.addActionListener(new ActionListener() {
+		Temperatura2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (Moneda2.getSelectedItem() == "--") {
+				if (Temperatura2.getSelectedItem() == "--") {
 					btnConvert.setEnabled(false);
-					MonedaRespuesta.setText("");
-				} else if (Moneda2.getSelectedItem() == Moneda1.getSelectedItem()) {
+					TemperaturaRespuesta.setText("");
+				} else if (Temperatura2.getSelectedItem() == Temperatura1.getSelectedItem()) {
 					btnConvert.setEnabled(false);
-					MonedaRespuesta.setText("Debe escoger tipos de monedas diferentes");
-					MonedaRespuesta.setForeground(Color.red);
+					TemperaturaRespuesta.setText("Debe escoger tipos de Temperaturas diferentes");
+					TemperaturaRespuesta.setForeground(Color.red);
 				} else {
-					MonedaRespuesta.setText("");
+					TemperaturaRespuesta.setText("");
 					btnConvert.setEnabled(true);
 				}
 			}
