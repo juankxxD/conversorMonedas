@@ -52,6 +52,7 @@ public class MenuMoneda extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 536, 228);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.CYAN);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -100,6 +101,9 @@ public class MenuMoneda extends JFrame {
 		contentPane.add(MonedaRespuesta);
 
 		JButton btnConvert = new JButton("Convertir");
+		btnConvert.setForeground(Color.WHITE);
+		btnConvert.setBorderPainted(false);
+		btnConvert.setBackground(Color.BLACK);
 		btnConvert.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (Valor.getText().length() == 0) {
@@ -136,6 +140,9 @@ public class MenuMoneda extends JFrame {
 		contentPane.add(lblNewJgoodiesTitle);
 
 		JButton btnVolver = new JButton("Volver");
+		btnVolver.setBorderPainted(false);
+		btnVolver.setForeground(Color.WHITE);
+		btnVolver.setBackground(Color.BLACK);
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Menu menuMain = new Menu();

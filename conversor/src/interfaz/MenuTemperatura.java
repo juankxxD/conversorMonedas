@@ -24,6 +24,7 @@ import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
+import java.awt.Cursor;
 
 public class MenuTemperatura extends JFrame {
 	private String[] optionsTemperatura = { "Fahrenheit - F", "Celsius - C", "Kelvin - K"};
@@ -53,6 +54,7 @@ public class MenuTemperatura extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 536, 228);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.CYAN);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -69,6 +71,8 @@ public class MenuTemperatura extends JFrame {
 		Temperatura2.addItem("--");
 
 		JComboBox Temperatura1 = new JComboBox();
+		Temperatura1.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		Temperatura1.setBackground(Color.WHITE);
 		for (int i = 0; i < optionsTemperatura.length; i++) {
 			Temperatura1.addItem(optionsTemperatura[i]);
 			Temperatura2.addItem(optionsTemperatura[i]);
@@ -101,6 +105,9 @@ public class MenuTemperatura extends JFrame {
 		contentPane.add(TemperaturaRespuesta);
 
 		JButton btnConvert = new JButton("Convertir");
+		btnConvert.setForeground(Color.WHITE);
+		btnConvert.setBorderPainted(false);
+		btnConvert.setBackground(Color.BLACK);
 		btnConvert.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (Valor.getText().length() == 0) {
@@ -129,13 +136,16 @@ public class MenuTemperatura extends JFrame {
 		btnConvert.setBounds(27, 135, 89, 23);
 		contentPane.add(btnConvert);
 
-		JLabel lblNewJgoodiesTitle = DefaultComponentFactory.getInstance().createTitle("CONVERTIDOR DE MONEDAS");
+		JLabel lblNewJgoodiesTitle = DefaultComponentFactory.getInstance().createTitle("CONVERTIDOR DE TEMPERATURA");
 		lblNewJgoodiesTitle.setFont(new Font("Ebrima", Font.BOLD | Font.ITALIC, 14));
 		lblNewJgoodiesTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewJgoodiesTitle.setBounds(0, 11, 520, 14);
 		contentPane.add(lblNewJgoodiesTitle);
 
 		JButton btnVolver = new JButton("Volver");
+		btnVolver.setBorderPainted(false);
+		btnVolver.setBackground(Color.BLACK);
+		btnVolver.setForeground(Color.WHITE);
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Menu menuMain = new Menu();
